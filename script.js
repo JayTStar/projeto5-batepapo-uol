@@ -1,45 +1,53 @@
-let nome, userName, codigoErro, destinatario, mensagem, tipo, mensagensData = [], participantesData = [];
+let nome, userName, codigo, destinatario, mensagem, tipo, mensagensData = [], participantesData = [];
 
 const USERNAME = "participants";
 const STATUS = "status";
 const  MENSAGENS = "messages";
 let ESTRUTURAMENSAGENS ;
 
-nome = prompt("Qual seu nome?");
-userName = {name: `${nome}`};
-requsicao(USERNAME, userName);
 
-setInterval(checaStatus, 5000, STATUS, userName);
-setInterval(pegaInfoMsg, 3000);
+pegaNome();
+
+setInterval(requsicao, 5000, STATUS, userName);
+setInterval(pegaInfo, 3000, MENSAGENS);
 
 function requsicao(destino, info){
     let requsicao = axios.post(`https://mock-api.driven.com.br/api/v4/uol/${destino}`, info);
-    requsicao.then(pegaInfoMsg);
-    requsicao.catch(pegaErro);
-}
-
-function checaStatus(destino, info){
-    let requsicao = axios.post(`https://mock-api.driven.com.br/api/v4/uol/${destino}`, info);
-    requsicao.catch(pegaErro);
-}
-
-function pegaInfoMsg(){
-    let promessa = axios.get(`https://mock-api.driven.com.br/api/v4/uol/${MENSAGENS}`);
-    promessa.then(mostraMensagens);
-    promessa.catch(pegaErro);
+   
+    if(destino === MENSAGENS){
+        console.log("requisição mensagens")
+        requsicao.then(console.log("requisição mensagens concluida"));
+        requsicao.catch(pegaErro);
+    }
+    if(destino === USERNAME){
+        console.log("requisição nome")
+        requsicao.then();
+        requsicao.catch(usercheck);
+    }
+    if(destino === STATUS){
+        console.log("requisição status")
+        requsicao.then();
+        requsicao.catch(pegaErro);
+    }
 }
 
 function pegaInfo(destino){
     let promessa = axios.get(`https://mock-api.driven.com.br/api/v4/uol/${destino}`);
-    promessa.then(deuCerto);
-    promessa.catch(pegaErro);
+
+    if(destino === MENSAGENS){
+        promessa.then(mostraMensagens);
+        promessa.catch(pegaErro);
+    }
+    if(destino === USERNAME){
+        promessa.then();
+        promessa.catch(pegaErro);
+    }
 }
 
-function deuCerto(sinal){
-    participantesData = sinal.data;
-}
 function pegaErro(erro){
- console.log(erro.response);
+    console.log(erro.response.status);
+
+    codigo = erro.response.status;
 }
 
 function mostraMensagens(resposta){
@@ -87,4 +95,11 @@ function mandaMensagem(){
     requsicao(MENSAGENS, ESTRUTURAMENSAGENS);
 
     document.querySelector("footer input").value = "";
+}
+
+function pegaNome(){
+    nome ="";
+    nome = prompt("Qual seu nome?");
+    userName = {name: `${nome}`};
+    requsicao(USERNAME, userName);
 }
