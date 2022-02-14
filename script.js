@@ -22,7 +22,7 @@ function requsicao(destino, info){
     if(destino === USERNAME){
         console.log("requisição nome")
         requsicao.then();
-        requsicao.catch(usercheck);
+        requsicao.catch(pegaNome);
     }
     if(destino === STATUS){
         console.log("requisição status")
@@ -75,10 +75,7 @@ function mostraMensagens(resposta){
         }
     }
 
-    const mensagensNaTela = document.querySelectorAll("main .msg");
-    const tamanho = mensagensNaTela.length;
-
-    mensagensNaTela[tamanho - 1].scrollIntoView;
+        rolagem();
 }
 
 function mandaMensagem(){
@@ -102,4 +99,11 @@ function pegaNome(){
     nome = prompt("Qual seu nome?");
     userName = {name: `${nome}`};
     requsicao(USERNAME, userName);
+}
+
+function rolagem(){
+    const mensagensNaTela = document.querySelectorAll(".msg");
+    const ultimaMensagem = mensagensNaTela[mensagensNaTela.length - 1];
+
+    ultimaMensagem.scrollIntoView({block: "end", behavior: "smooth"});
 }
