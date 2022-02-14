@@ -61,17 +61,17 @@ function mostraMensagens(resposta){
 
         if(mensagensData[i].type === "status"){
             localMensagens.innerHTML = localMensagens.innerHTML + `
-            <div class="msg entrada"> <time> (${mensagensData[i].time}) </time> <p class="contúdo"> <span>${mensagensData[i].from}</span> ${mensagensData[i].text}</p></div>`
+            <div class="msg entrada" data-identifier="message"> <time> (${mensagensData[i].time}) </time> <p class="contúdo"> <span>${mensagensData[i].from}</span> ${mensagensData[i].text}</p></div>`
         }
 
         if(mensagensData[i].type === "message" && mensagensData[i].to === "Todos"){
             localMensagens.innerHTML = localMensagens.innerHTML + `
-            <div class="msg geral"><time> (${mensagensData[i].time}) </time> <p class="contúdo"> <span>${mensagensData[i].from}</span> para <span>${mensagensData[i].to}: </span>${mensagensData[i].text}</p></div>`
+            <div class="msg geral" data-identifier="message"><time> (${mensagensData[i].time}) </time> <p class="contúdo"> <span>${mensagensData[i].from}</span> para <span>${mensagensData[i].to}: </span>${mensagensData[i].text}</p></div>`
         }
 
         if(mensagensData[i].type === "message" && mensagensData[i].to === userName.name){
             localMensagens.innerHTML = localMensagens.innerHTML + `
-            // <div class="msg reservada"><time> (${mensagensData[i].time}) </time> <p class="contúdo"> <span>${mensagensData[i].from}</span> para <span>${mensagensData[i].to}: </span>${mensagensData[i].text}</p></div>`
+            // <div class="msg reservada" data-identifier="message"><time> (${mensagensData[i].time}) </time> <p class="contúdo"> <span>${mensagensData[i].from}</span> para <span>${mensagensData[i].to}: </span>${mensagensData[i].text}</p></div>`
         }
     }
 
